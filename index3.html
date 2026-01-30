@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="th" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คดีลับทรัพย์สินทางปัญญา</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    @keyframes scan-line {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+    
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+    .animate-shake { animation: shake 0.5s ease-in-out; }
+    
+    .evidence-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .evidence-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+    }
+    
+    .evidence-card.discovered {
+      border-color: #10b981;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+    }
+    
+    .suspect-card {
+      transition: all 0.3s ease;
+    }
+    
+    .suspect-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .suspect-card.eliminated {
+      opacity: 0.5;
+      filter: grayscale(1);
+    }
+    
+    .suspect-card.guilty {
+      border-color: #ef4444;
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+    }
+    
+    .page-transition {
+      animation: fade-in-up 0.5s ease-out;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .clue-highlight {
+      background: linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.3), transparent);
+      animation: scan-line 2s linear infinite;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .neon-text {
+      text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #1e1b4b;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #7c3aed;
+      border-radius: 4px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 text-white overflow-auto">
+  <div id="app" class="min-h-full w-full"><!-- Page 0: Title Screen -->
+   <div id="page-0" class="page min-h-full flex flex-col items-center justify-center p-6 page-transition">
+    <div class="text-center max-w-3xl mx-auto"><!-- Logo -->
+     <div class="mb-8 animate-float">
+      <div class="w-32 h-32 mx-auto relative">
+       <svg viewbox="0 0 128 128" class="w-full h-full"><defs>
+         <lineargradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#8b5cf6" />
+          <stop offset="100%" style="stop-color:#3b82f6" />
+         </lineargradient>
+        </defs> <path d="M64 8 L112 28 L112 60 C112 90 90 110 64 120 C38 110 16 90 16 60 L16 28 Z" fill="url(#shieldGrad)" stroke="#fbbf24" stroke-width="3" /> <circle cx="64" cy="55" r="20" fill="none" stroke="#fbbf24" stroke-width="3" /> <circle cx="64" cy="55" r="8" fill="#fbbf24" /> <rect x="60" y="75" width="8" height="20" fill="#fbbf24" />
+       </svg>
+      </div>
+     </div>
+     <h1 id="main-title" class="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent">คดีลับทรัพย์สินทางปัญญา</h1>
+     <p class="text-xl md:text-2xl text-purple-300 mb-2">🔍 ใครคือผู้ขโมย?</p>
+     <p class="text-gray-400 mb-8">เกมการเรียนรู้เชิงสืบสวน</p>
+     <div class="glass-card rounded-2xl p-6 mb-8">
+      <p class="text-lg text-gray-300 leading-relaxed">ยินดีต้อนรับสู่หน่วยสืบสวนดิจิทัล<br>
+        คุณได้รับมอบหมายให้สืบสวนคดีการละเมิดทรัพย์สินทางปัญญา<br><span class="text-yellow-400">พร้อมที่จะเริ่มภารกิจหรือยัง?</span></p>
+     </div><button onclick="goToPage(1)" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-xl font-semibold 
+                       hover:from-purple-500 hover:to-blue-500 transition-all animate-pulse-glow"> 🎯 เริ่มสืบสวน </button>
+    </div>
+   </div><!-- Page 1: Case Opening -->
+   <div id="page-1" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center"><span class="text-2xl">🚨</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-red-400">แจ้งเหตุด่วน!</h2>
+       <p class="text-gray-400">คดีหมายเลข: IP-2024-0789</p>
+      </div>
+     </div><!-- Alert Card -->
+     <div class="bg-gradient-to-r from-red-900/50 to-purple-900/50 rounded-2xl p-6 mb-6 border border-red-500/30">
+      <div class="flex items-start gap-4">
+       <div class="text-4xl animate-shake">
+        ⚠️
+       </div>
+       <div>
+        <h3 class="text-xl font-semibold text-red-300 mb-2">พบการละเมิดทรัพย์สินทางปัญญา!</h3>
+        <p class="text-gray-300 leading-relaxed">เมื่อวันที่ <span class="text-yellow-400 font-semibold">15 มกราคม 2567</span> ศูนย์รับเรื่องร้องเรียนได้รับแจ้งจากนักออกแบบกราฟิกว่า ผลงานออกแบบโลโก้ของเขาถูกนำไปใช้โดยไม่ได้รับอนุญาต และมีการนำไปใช้ในเชิงพาณิชย์</p>
+       </div>
+      </div>
+     </div><!-- Story Cards -->
+     <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="glass-card rounded-xl p-5">
+       <div class="flex items-center gap-3 mb-3"><span class="text-2xl">🎨</span>
+        <h4 class="font-semibold text-purple-300">ผลงานที่ถูกละเมิด</h4>
+       </div>
+       <p class="text-gray-400 text-sm">โลโก้ "Digital Spark" ออกแบบด้วยสไตล์มินิมอล สีม่วง-น้ำเงิน มูลค่าการว่าจ้าง 15,000 บาท</p>
+      </div>
+      <div class="glass-card rounded-xl p-5">
+       <div class="flex items-center gap-3 mb-3"><span class="text-2xl">📍</span>
+        <h4 class="font-semibold text-purple-300">สถานที่พบการละเมิด</h4>
+       </div>
+       <p class="text-gray-400 text-sm">พบโลโก้ดังกล่าวปรากฏบนสินค้าที่วางจำหน่ายในร้านค้าออนไลน์ โดยไม่มีการขออนุญาตจากเจ้าของผลงาน</p>
+      </div>
+     </div><!-- Mission Assignment -->
+     <div class="bg-gradient-to-r from-blue-900/50 to-purple-900/50 rounded-2xl p-6 border border-blue-500/30">
+      <div class="flex items-center gap-4">
+       <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center text-3xl">
+        🕵️
+       </div>
+       <div>
+        <h3 class="text-xl font-semibold text-blue-300 mb-1">ภารกิจของคุณ</h3>
+        <p class="text-gray-300">ในฐานะ <span class="text-yellow-400 font-semibold">นักสืบดิจิทัล</span> คุณต้องสืบสวนหาผู้กระทำผิด วิเคราะห์หลักฐาน และทำความเข้าใจกฎหมายที่เกี่ยวข้อง</p>
+       </div>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(0)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(2)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> ดูแฟ้มคดี → </button>
+     </div>
+    </div>
+   </div><!-- Page 2: Case File -->
+   <div id="page-2" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-2xl">📁</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-purple-300">แฟ้มคดี</h2>
+       <p class="text-gray-400">รายละเอียดผลงานที่ถูกละเมิด</p>
+      </div>
+     </div><!-- Artwork Display -->
+     <div class="glass-card rounded-2xl p-6 mb-6">
+      <div class="flex flex-col md:flex-row gap-6"><!-- Logo Preview -->
+       <div class="md:w-1/3">
+        <div class="bg-gradient-to-br from-purple-900 to-blue-900 rounded-xl p-8 flex items-center justify-center">
+         <svg viewbox="0 0 120 120" class="w-32 h-32"><defs>
+           <lineargradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b5cf6" />
+            <stop offset="50%" style="stop-color:#3b82f6" />
+            <stop offset="100%" style="stop-color:#06b6d4" />
+           </lineargradient>
+          </defs> <circle cx="60" cy="60" r="50" fill="url(#logoGrad)" /> <path d="M40 60 L55 45 L70 60 L85 45" stroke="#fbbf24" stroke-width="4" fill="none" stroke-linecap="round" /> <circle cx="60" cy="75" r="8" fill="#fbbf24" /> <text x="60" y="105" text-anchor="middle" fill="white" font-size="10" font-weight="bold">
+           Digital Spark
+          </text>
+         </svg>
+        </div>
+        <p class="text-center text-gray-400 text-sm mt-2">ผลงานต้นฉบับ</p>
+       </div><!-- Details -->
+       <div class="md:w-2/3">
+        <h3 class="text-xl font-semibold text-white mb-4">โลโก้ "Digital Spark"</h3>
+        <div class="space-y-3">
+         <div class="flex items-center gap-3"><span class="text-yellow-400">🎨</span> <span class="text-gray-400">ประเภท:</span> <span class="text-white">งานออกแบบกราฟิก (Graphic Design)</span>
+         </div>
+         <div class="flex items-center gap-3"><span class="text-yellow-400">📅</span> <span class="text-gray-400">วันที่สร้าง:</span> <span class="text-white">10 ธันวาคม 2566</span>
+         </div>
+         <div class="flex items-center gap-3"><span class="text-yellow-400">💰</span> <span class="text-gray-400">มูลค่า:</span> <span class="text-white">15,000 บาท</span>
+         </div>
+         <div class="flex items-center gap-3"><span class="text-yellow-400">📝</span> <span class="text-gray-400">ซอฟต์แวร์:</span> <span class="text-white">Adobe Illustrator</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Legal Protection Info -->
+     <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-2xl p-6 border border-green-500/30">
+      <div class="flex items-start gap-4">
+       <div class="text-3xl">
+        ⚖️
+       </div>
+       <div>
+        <h3 class="text-lg font-semibold text-green-300 mb-2">การคุ้มครองทางกฎหมาย</h3>
+        <p class="text-gray-300 text-sm leading-relaxed mb-3">ผลงานนี้ได้รับความคุ้มครองตาม <span class="text-yellow-400 font-semibold">พ.ร.บ.ลิขสิทธิ์ พ.ศ.2537</span> โดยอัตโนมัติตั้งแต่สร้างสรรค์ผลงานเสร็จ โดยไม่ต้องจดทะเบียน</p>
+        <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-green-500/20 rounded-full text-green-300 text-xs">✓ งานศิลปกรรม</span> <span class="px-3 py-1 bg-green-500/20 rounded-full text-green-300 text-xs">✓ ความคิดสร้างสรรค์</span> <span class="px-3 py-1 bg-green-500/20 rounded-full text-green-300 text-xs">✓ คุ้มครองตลอดชีวิต+50ปี</span>
+        </div>
+       </div>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(1)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(3)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> พบผู้เสียหาย → </button>
+     </div>
+    </div>
+   </div><!-- Page 3: Victim -->
+   <div id="page-3" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-2xl">👤</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-blue-300">ผู้เสียหาย</h2>
+       <p class="text-gray-400">เจ้าของผลงานต้นฉบับ</p>
+      </div>
+     </div><!-- Victim Profile -->
+     <div class="glass-card rounded-2xl p-6 mb-6">
+      <div class="flex flex-col md:flex-row gap-6"><!-- Avatar -->
+       <div class="md:w-1/3 flex flex-col items-center">
+        <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-5xl mb-4">
+         👨‍🎨
+        </div>
+        <h3 class="text-xl font-semibold text-white">คุณธนกร วงศ์สว่าง</h3>
+        <p class="text-purple-300">Graphic Designer</p>
+        <div class="flex gap-2 mt-2"><span class="px-2 py-1 bg-blue-500/20 rounded text-blue-300 text-xs">5 ปีประสบการณ์</span>
+        </div>
+       </div><!-- Statement -->
+       <div class="md:w-2/3">
+        <div class="bg-gray-800/50 rounded-xl p-4 mb-4">
+         <p class="text-gray-400 text-sm mb-2">💬 คำให้การ:</p>
+         <p class="text-white italic leading-relaxed">"ผมออกแบบโลโก้นี้ให้ลูกค้าเมื่อเดือนธันวาคมที่ผ่านมา แต่เมื่อวันก่อนผมเห็นโลโก้เดียวกันนี้ปรากฏอยู่บนสินค้าในร้านออนไลน์ ผมไม่เคยอนุญาตให้ใครนำไปใช้นอกจากลูกค้าที่ว่าจ้างผม"</p>
+        </div>
+        <h4 class="font-semibold text-purple-300 mb-3">📋 หลักฐานการเป็นเจ้าของ</h4>
+        <div class="grid grid-cols-2 gap-3">
+         <div class="bg-gray-800/30 rounded-lg p-3 border border-gray-700"><span class="text-green-400 text-sm">✓</span> <span class="text-gray-300 text-sm ml-2">ไฟล์ต้นฉบับ .AI</span>
+         </div>
+         <div class="bg-gray-800/30 rounded-lg p-3 border border-gray-700"><span class="text-green-400 text-sm">✓</span> <span class="text-gray-300 text-sm ml-2">Metadata ไฟล์</span>
+         </div>
+         <div class="bg-gray-800/30 rounded-lg p-3 border border-gray-700"><span class="text-green-400 text-sm">✓</span> <span class="text-gray-300 text-sm ml-2">สัญญาว่าจ้าง</span>
+         </div>
+         <div class="bg-gray-800/30 rounded-lg p-3 border border-gray-700"><span class="text-green-400 text-sm">✓</span> <span class="text-gray-300 text-sm ml-2">ประวัติการทำงาน</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- File Evidence -->
+     <div class="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-2xl p-6 border border-gray-700">
+      <h4 class="font-semibold text-yellow-300 mb-4">🗂️ ข้อมูลไฟล์ต้นฉบับ</h4>
+      <div class="bg-black/30 rounded-lg p-4 font-mono text-sm">
+       <p class="text-green-400">📄 DigitalSpark_Logo_Final.ai</p>
+       <p class="text-gray-400 mt-2">├── Created: <span class="text-white">10/12/2566 14:23:45</span></p>
+       <p class="text-gray-400">├── Modified: <span class="text-white">10/12/2566 18:45:12</span></p>
+       <p class="text-gray-400">├── Author: <span class="text-white">Thanakorn W.</span></p>
+       <p class="text-gray-400">└── Software: <span class="text-white">Adobe Illustrator 2024</span></p>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(2)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(4)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> พบผู้ต้องสงสัย → </button>
+     </div>
+    </div>
+   </div><!-- Page 4: Suspects -->
+   <div id="page-4" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-5xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center"><span class="text-2xl">🎯</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-red-300">ผู้ต้องสงสัย 3 ราย</h2>
+       <p class="text-gray-400">วิเคราะห์แรงจูงใจและโอกาส</p>
+      </div>
+     </div><!-- Suspects Grid -->
+     <div class="grid md:grid-cols-3 gap-4 mb-6"><!-- Suspect 1 -->
+      <div class="suspect-card glass-card rounded-2xl p-5 border-2 border-transparent hover:border-purple-500/50">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-pink-500 to-red-600 flex items-center justify-center text-3xl mb-2">
+         👩‍💼
+        </div>
+        <h3 class="font-semibold text-white">คุณสมหญิง ค้าขายดี</h3>
+        <p class="text-purple-300 text-sm">เจ้าของเพจขายของออนไลน์</p>
+       </div>
+       <div class="space-y-3 text-sm">
+        <div class="bg-gray-800/50 rounded-lg p-3">
+         <p class="text-yellow-400 mb-1">💡 แรงจูงใจ</p>
+         <p class="text-gray-300">ต้องการโลโก้สวยๆ สำหรับร้านค้า แต่ไม่อยากจ่ายค่าออกแบบ</p>
+        </div>
+        <div class="bg-gray-800/50 rounded-lg p-3">
+         <p class="text-blue-400 mb-1">🔑 โอกาส</p>
+         <p class="text-gray-300">เห็นโลโก้ในโซเชียลมีเดีย และบันทึกภาพไว้</p>
+        </div>
+       </div>
+      </div><!-- Suspect 2 -->
+      <div class="suspect-card glass-card rounded-2xl p-5 border-2 border-transparent hover:border-purple-500/50">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-3xl mb-2">
+         👨‍💻
+        </div>
+        <h3 class="font-semibold text-white">คุณวิชัย การตลาด</h3>
+        <p class="text-purple-300 text-sm">พนักงานฝ่ายมาร์เก็ตติ้ง</p>
+       </div>
+       <div class="space-y-3 text-sm">
+        <div class="bg-gray-800/50 rounded-lg p-3">
+         <p class="text-yellow-400 mb-1">💡 แรงจูงใจ</p>
+         <p class="text-gray-300">ถูกกดดันจากหัวหน้าให้หาโลโก้ใหม่ภายใน 1 วัน</p>
+        </div>
+        <div class="bg-gray-800/50 rounded-lg p-3">
+         <p class="text-blue-400 mb-1">🔑 โอกาส</p>
+         <p class="text-gray-300">เคยร่วมงานกับลูกค้าที่ว่าจ้างนักออกแบบ</p>
+        </div>
+       </div>
+      </div><!-- Suspect 3 -->
+      <div class="suspect-card glass-card rounded-2xl p-5 border-2 border-transparent hover:border-purple-500/50">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-3xl mb-2">
+         🧑‍🎨
+        </div>
+        <h3 class="font-semibold text-white">คุณณัฐพล ฟรีแลนซ์</h3>
+        <p class="text-purple-300 text-sm">ฟรีแลนซ์รับออกแบบ</p>
+       </div>
+       <div class="space-y-3 text-sm">
+        <div class="bg-gray-800/50 rounded-lg p-3">
+         <p class="text-yellow-400 mb-1">💡 แรงจูงใจ</p>
+         <p class="text-gray-300">ต้องส่งงานลูกค้าเร่งด่วน แต่ไม่มีเวลาออกแบบเอง</p>
+        </div>
+        <div class="bg-gray-800/50 rounded-lg p-3">
+         <p class="text-blue-400 mb-1">🔑 โอกาส</p>
+         <p class="text-gray-300">เป็นเพื่อนร่วมวงการกับเจ้าของผลงาน เข้าถึงไฟล์ได้</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Hint Box -->
+     <div class="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-2xl p-5 border border-yellow-500/30">
+      <div class="flex items-start gap-3"><span class="text-2xl">💭</span>
+       <div>
+        <p class="text-yellow-300 font-semibold mb-1">คำใบ้จากนักสืบรุ่นพี่</p>
+        <p class="text-gray-300 text-sm">"การหาผู้กระทำผิดต้องดูทั้ง <span class="text-yellow-400">แรงจูงใจ</span>, <span class="text-blue-400">โอกาส</span>, และ <span class="text-green-400">หลักฐาน</span> ประกอบกัน ไปสำรวจหลักฐานกันเถอะ!"</p>
+       </div>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(3)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(5)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> สำรวจหลักฐาน → </button>
+     </div>
+    </div>
+   </div><!-- Page 5: Evidence Investigation -->
+   <div id="page-5" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-5xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-4">
+       <div class="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center"><span class="text-2xl">🔍</span>
+       </div>
+       <div>
+        <h2 class="text-2xl font-bold text-yellow-300">ห้องหลักฐาน</h2>
+        <p class="text-gray-400">คลิกที่หลักฐานเพื่อตรวจสอบ</p>
+       </div>
+      </div>
+      <div class="text-right">
+       <p class="text-sm text-gray-400">หลักฐานที่พบ</p>
+       <p class="text-2xl font-bold text-yellow-400"><span id="evidence-count">0</span>/4</p>
+      </div>
+     </div><!-- Evidence Grid -->
+     <div class="grid md:grid-cols-2 gap-4 mb-6"><!-- Evidence 1 -->
+      <div id="evidence-1" class="evidence-card glass-card rounded-2xl p-5 border-2 border-gray-700" onclick="discoverEvidence(1)">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         📄
+        </div>
+        <div class="flex-1">
+         <h4 class="font-semibold text-white mb-2">ไฟล์งานที่พบในร้านค้า</h4>
+         <div id="evidence-1-content" class="text-gray-400 text-sm">
+          <p class="mb-2">คลิกเพื่อตรวจสอบ...</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Evidence 2 -->
+      <div id="evidence-2" class="evidence-card glass-card rounded-2xl p-5 border-2 border-gray-700" onclick="discoverEvidence(2)">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         ⏰
+        </div>
+        <div class="flex-1">
+         <h4 class="font-semibold text-white mb-2">Timeline การอัปโหลด</h4>
+         <div id="evidence-2-content" class="text-gray-400 text-sm">
+          <p class="mb-2">คลิกเพื่อตรวจสอบ...</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Evidence 3 -->
+      <div id="evidence-3" class="evidence-card glass-card rounded-2xl p-5 border-2 border-gray-700" onclick="discoverEvidence(3)">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         💬
+        </div>
+        <div class="flex-1">
+         <h4 class="font-semibold text-white mb-2">ข้อความการติดต่อ</h4>
+         <div id="evidence-3-content" class="text-gray-400 text-sm">
+          <p class="mb-2">คลิกเพื่อตรวจสอบ...</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Evidence 4 -->
+      <div id="evidence-4" class="evidence-card glass-card rounded-2xl p-5 border-2 border-gray-700" onclick="discoverEvidence(4)">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-xl bg-red-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         🔗
+        </div>
+        <div class="flex-1">
+         <h4 class="font-semibold text-white mb-2">ความเชื่อมโยง</h4>
+         <div id="evidence-4-content" class="text-gray-400 text-sm">
+          <p class="mb-2">คลิกเพื่อตรวจสอบ...</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Analysis Box -->
+     <div id="analysis-box" class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-2xl p-5 border border-purple-500/30 hidden">
+      <h4 class="font-semibold text-purple-300 mb-3">🧠 การวิเคราะห์</h4>
+      <p id="analysis-text" class="text-gray-300 text-sm leading-relaxed"></p>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(4)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button id="next-btn-5" onclick="goToPage(6)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all opacity-50 cursor-not-allowed" disabled> ดูความคืบหน้า → </button>
+     </div>
+    </div>
+   </div><!-- Page 6: Case Progress -->
+   <div id="page-6" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center"><span class="text-2xl">📊</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-cyan-300">ความคืบหน้าคดี</h2>
+       <p class="text-gray-400">สรุปข้อมูลจากการสืบสวน</p>
+      </div>
+     </div><!-- Progress Summary -->
+     <div class="glass-card rounded-2xl p-6 mb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">📋 สิ่งที่เราพบ</h3>
+      <div class="space-y-4">
+       <div class="flex items-start gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/30"><span class="text-green-400">✓</span>
+        <p class="text-gray-300">โลโก้ที่พบในร้านค้าออนไลน์เป็นไฟล์เดียวกันกับผลงานต้นฉบับ 100%</p>
+       </div>
+       <div class="flex items-start gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/30"><span class="text-green-400">✓</span>
+        <p class="text-gray-300">ร้านค้าเริ่มใช้โลโก้หลังจากผลงานต้นฉบับถูกสร้าง 1 เดือน</p>
+       </div>
+       <div class="flex items-start gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/30"><span class="text-green-400">✓</span>
+        <p class="text-gray-300">พบข้อความว่าจ้างระหว่างเจ้าของร้านและฟรีแลนซ์</p>
+       </div>
+       <div class="flex items-start gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/30"><span class="text-green-400">✓</span>
+        <p class="text-gray-300">ฟรีแลนซ์เป็นเพื่อนร่วมวงการที่เคยเห็นไฟล์ต้นฉบับ</p>
+       </div>
+      </div>
+     </div><!-- Suspect Elimination -->
+     <div class="glass-card rounded-2xl p-6 mb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">🎯 การตัดผู้ต้องสงสัย</h3>
+      <div class="space-y-4"><!-- Suspect 1 - Eliminated -->
+       <div class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-xl opacity-50">
+        <div class="w-12 h-12 rounded-full bg-pink-500/30 flex items-center justify-center text-xl">
+         👩‍💼
+        </div>
+        <div class="flex-1">
+         <p class="font-semibold text-gray-400 line-through">คุณสมหญิง - เจ้าของเพจ</p>
+         <p class="text-sm text-gray-500">❌ ไม่มีหลักฐานการเข้าถึงไฟล์ต้นฉบับ</p>
+        </div><span class="px-3 py-1 bg-gray-600 rounded-full text-gray-400 text-sm">ตัดออก</span>
+       </div><!-- Suspect 2 - Eliminated -->
+       <div class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-xl opacity-50">
+        <div class="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center text-xl">
+         👨‍💻
+        </div>
+        <div class="flex-1">
+         <p class="font-semibold text-gray-400 line-through">คุณวิชัย - พนักงานมาร์เก็ตติ้ง</p>
+         <p class="text-sm text-gray-500">❌ ไม่มีความเกี่ยวข้องกับร้านค้าที่พบการละเมิด</p>
+        </div><span class="px-3 py-1 bg-gray-600 rounded-full text-gray-400 text-sm">ตัดออก</span>
+       </div><!-- Suspect 3 - Primary -->
+       <div class="flex items-center gap-4 p-4 bg-red-900/30 rounded-xl border-2 border-red-500/50">
+        <div class="w-12 h-12 rounded-full bg-green-500/30 flex items-center justify-center text-xl">
+         🧑‍🎨
+        </div>
+        <div class="flex-1">
+         <p class="font-semibold text-red-300">คุณณัฐพล - ฟรีแลนซ์</p>
+         <p class="text-sm text-red-400">⚠️ มีทั้งแรงจูงใจ โอกาส และหลักฐานเชื่อมโยง</p>
+        </div><span class="px-3 py-1 bg-red-500/30 rounded-full text-red-300 text-sm">ต้องสงสัยหลัก</span>
+       </div>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(5)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(7)" class="px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 transition-all"> เฉลยคดี 🔓 </button>
+     </div>
+    </div>
+   </div><!-- Page 7: Case Reveal -->
+   <div id="page-7" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center animate-pulse"><span class="text-2xl">🔓</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-red-400">เฉลยคดี!</h2>
+       <p class="text-gray-400">ผู้กระทำผิดถูกเปิดเผย</p>
+      </div>
+     </div><!-- Culprit Reveal -->
+     <div class="bg-gradient-to-r from-red-900/50 to-orange-900/50 rounded-2xl p-6 mb-6 border border-red-500/50">
+      <div class="text-center mb-6">
+       <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-5xl mb-4 ring-4 ring-red-500">
+        🧑‍🎨
+       </div>
+       <h3 class="text-2xl font-bold text-red-400">คุณณัฐพล ฟรีแลนซ์</h3>
+       <p class="text-yellow-400">คือผู้กระทำผิดในคดีนี้!</p>
+      </div>
+      <div class="bg-black/30 rounded-xl p-5">
+       <h4 class="font-semibold text-white mb-3">📝 สรุปเหตุการณ์</h4>
+       <p class="text-gray-300 leading-relaxed text-sm">คุณณัฐพลได้รับงานออกแบบโลโก้จากเจ้าของร้านค้าออนไลน์ แต่เนื่องจากเวลากระชั้น จึงนำโลโก้ของคุณธนกร ซึ่งเคยเห็นในกลุ่มนักออกแบบ มาส่งให้ลูกค้าโดยไม่ได้ขออนุญาต ทำให้เกิดการนำผลงานไปใช้ในเชิงพาณิชย์ โดยไม่ได้รับอนุญาตจากเจ้าของลิขสิทธิ์</p>
+      </div>
+     </div><!-- Why It's Wrong -->
+     <div class="glass-card rounded-2xl p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-300 mb-4">⚖️ ทำไมการกระทำนี้จึงผิดกฎหมาย?</h3>
+      <div class="space-y-3">
+       <div class="flex items-start gap-3"><span class="text-red-400 mt-1">✗</span>
+        <p class="text-gray-300 text-sm"><span class="text-white font-semibold">ละเมิดลิขสิทธิ์:</span> นำผลงานผู้อื่นมาใช้โดยไม่ได้รับอนุญาต</p>
+       </div>
+       <div class="flex items-start gap-3"><span class="text-red-400 mt-1">✗</span>
+        <p class="text-gray-300 text-sm"><span class="text-white font-semibold">ใช้เชิงพาณิชย์:</span> นำผลงานไปใช้เพื่อหารายได้/ทำธุรกิจ</p>
+       </div>
+       <div class="flex items-start gap-3"><span class="text-red-400 mt-1">✗</span>
+        <p class="text-gray-300 text-sm"><span class="text-white font-semibold">ไม่ให้เครดิต:</span> ไม่ระบุชื่อเจ้าของผลงานต้นฉบับ</p>
+       </div>
+       <div class="flex items-start gap-3"><span class="text-red-400 mt-1">✗</span>
+        <p class="text-gray-300 text-sm"><span class="text-white font-semibold">แอบอ้างเป็นผลงานตนเอง:</span> ส่งมอบงานให้ลูกค้าในนามของตัวเอง</p>
+       </div>
+      </div>
+     </div><!-- Evidence Link -->
+     <div class="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-2xl p-5 border border-yellow-500/30">
+      <h4 class="font-semibold text-yellow-300 mb-3">🔗 หลักฐานที่ชี้ตัว</h4>
+      <ul class="text-gray-300 text-sm space-y-2">
+       <li>• ไฟล์ที่ส่งให้เจ้าของร้าน ตรงกับไฟล์ต้นฉบับ 100%</li>
+       <li>• Metadata แสดงว่าไม่ได้สร้างไฟล์เอง แต่เป็นการ Copy</li>
+       <li>• ข้อความยืนยันว่ารับงานและส่งมอบโลโก้</li>
+       <li>• เป็นคนเดียวที่มีโอกาสเข้าถึงไฟล์ต้นฉบับ</li>
+      </ul>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(6)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(8)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> เรียนรู้กฎหมาย → </button>
+     </div>
+    </div>
+   </div><!-- Page 8: Legal Knowledge -->
+   <div id="page-8" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-2xl">📚</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-blue-300">ความรู้ทางกฎหมาย</h2>
+       <p class="text-gray-400">ทำความเข้าใจทรัพย์สินทางปัญญา</p>
+      </div>
+     </div><!-- Legal Cards -->
+     <div class="space-y-4 mb-6"><!-- Copyright -->
+      <div class="glass-card rounded-2xl p-5">
+       <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         ©
+        </div>
+        <div>
+         <h3 class="font-semibold text-purple-300 mb-2">ลิขสิทธิ์คืออะไร?</h3>
+         <p class="text-gray-300 text-sm leading-relaxed">ลิขสิทธิ์คือสิทธิแต่เพียงผู้เดียวของผู้สร้างสรรค์ ในการทำซ้ำ ดัดแปลง หรือเผยแพร่ผลงานของตน โดยได้รับความคุ้มครองโดยอัตโนมัติ ตั้งแต่สร้างผลงานเสร็จ <span class="text-yellow-400">ไม่ต้องจดทะเบียน</span></p>
+        </div>
+       </div>
+      </div><!-- Ownership -->
+      <div class="glass-card rounded-2xl p-5">
+       <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         👤
+        </div>
+        <div>
+         <h3 class="font-semibold text-green-300 mb-2">ใครคือเจ้าของผลงาน?</h3>
+         <p class="text-gray-300 text-sm leading-relaxed">โดยปกติ <span class="text-yellow-400">ผู้สร้างสรรค์ผลงาน</span> คือเจ้าของลิขสิทธิ์ ยกเว้นกรณีทำงานให้นายจ้าง หรือมีสัญญาโอนสิทธิ์ให้ผู้อื่น</p>
+        </div>
+       </div>
+      </div><!-- Permission -->
+      <div class="glass-card rounded-2xl p-5">
+       <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         ✅
+        </div>
+        <div>
+         <h3 class="font-semibold text-blue-300 mb-2">การขออนุญาต</h3>
+         <p class="text-gray-300 text-sm leading-relaxed">หากต้องการใช้ผลงานผู้อื่น ต้อง <span class="text-yellow-400">ขออนุญาตเจ้าของก่อนเสมอ</span> โดยควรทำเป็นลายลักษณ์อักษร ระบุขอบเขตและระยะเวลาการใช้งานให้ชัดเจน</p>
+        </div>
+       </div>
+      </div><!-- Commercial Use -->
+      <div class="glass-card rounded-2xl p-5">
+       <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+         💰
+        </div>
+        <div>
+         <h3 class="font-semibold text-yellow-300 mb-2">การใช้เชิงพาณิชย์</h3>
+         <p class="text-gray-300 text-sm leading-relaxed">การนำผลงานไปใช้เพื่อหารายได้ ทำธุรกิจ หรือโฆษณาสินค้า ถือเป็น <span class="text-red-400">การละเมิดที่รุนแรง</span> หากไม่ได้รับอนุญาต มีโทษทั้งทางแพ่งและอาญา</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Types of IP -->
+     <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-2xl p-5 border border-purple-500/30">
+      <h4 class="font-semibold text-purple-300 mb-3">🏷️ ประเภทของทรัพย์สินทางปัญญา</h4>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+       <div class="text-center p-3 bg-gray-800/30 rounded-lg"><span class="text-2xl">©</span>
+        <p class="text-xs text-gray-300 mt-1">ลิขสิทธิ์</p>
+       </div>
+       <div class="text-center p-3 bg-gray-800/30 rounded-lg"><span class="text-2xl">®</span>
+        <p class="text-xs text-gray-300 mt-1">เครื่องหมายการค้า</p>
+       </div>
+       <div class="text-center p-3 bg-gray-800/30 rounded-lg"><span class="text-2xl">💡</span>
+        <p class="text-xs text-gray-300 mt-1">สิทธิบัตร</p>
+       </div>
+       <div class="text-center p-3 bg-gray-800/30 rounded-lg"><span class="text-2xl">🔐</span>
+        <p class="text-xs text-gray-300 mt-1">ความลับทางการค้า</p>
+       </div>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(7)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(9)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> ดูบทลงโทษ → </button>
+     </div>
+    </div>
+   </div><!-- Page 9: Penalties -->
+   <div id="page-9" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center"><span class="text-2xl">⚠️</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-red-400">โทษและผลกระทบ</h2>
+       <p class="text-gray-400">ผลที่ตามมาจากการละเมิดลิขสิทธิ์</p>
+      </div>
+     </div><!-- Penalty Cards -->
+     <div class="grid md:grid-cols-2 gap-4 mb-6"><!-- Civil -->
+      <div class="glass-card rounded-2xl p-5 border-2 border-orange-500/30">
+       <div class="flex items-center gap-3 mb-4"><span class="text-3xl">⚖️</span>
+        <h3 class="text-lg font-semibold text-orange-400">โทษทางแพ่ง</h3>
+       </div>
+       <ul class="text-gray-300 text-sm space-y-3">
+        <li class="flex items-start gap-2"><span class="text-orange-400">•</span> <span>ชดใช้ค่าเสียหายตามจริง</span></li>
+        <li class="flex items-start gap-2"><span class="text-orange-400">•</span> <span>จ่ายค่าเสียหายเชิงลงโทษ (ไม่เกิน 2 เท่า)</span></li>
+        <li class="flex items-start gap-2"><span class="text-orange-400">•</span> <span>ถูกฟ้องร้องเรียกค่าเสียหาย</span></li>
+        <li class="flex items-start gap-2"><span class="text-orange-400">•</span> <span>ยึดสินค้าที่ละเมิดลิขสิทธิ์</span></li>
+       </ul>
+      </div><!-- Criminal -->
+      <div class="glass-card rounded-2xl p-5 border-2 border-red-500/30">
+       <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🚨</span>
+        <h3 class="text-lg font-semibold text-red-400">โทษทางอาญา</h3>
+       </div>
+       <ul class="text-gray-300 text-sm space-y-3">
+        <li class="flex items-start gap-2"><span class="text-red-400">•</span> <span><span class="text-white font-semibold">จำคุกไม่เกิน 4 ปี</span></span></li>
+        <li class="flex items-start gap-2"><span class="text-red-400">•</span> <span><span class="text-white font-semibold">ปรับไม่เกิน 800,000 บาท</span></span></li>
+        <li class="flex items-start gap-2"><span class="text-red-400">•</span> <span>หรือทั้งจำทั้งปรับ</span></li>
+        <li class="flex items-start gap-2"><span class="text-red-400">•</span> <span>หากทำเพื่อการค้า: โทษหนักขึ้น</span></li>
+       </ul>
+      </div>
+     </div><!-- Real Impact -->
+     <div class="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-2xl p-6 mb-6 border border-gray-700">
+      <h3 class="text-lg font-semibold text-white mb-4">💔 ผลกระทบในชีวิตจริง</h3>
+      <div class="space-y-4">
+       <div class="flex items-start gap-3 p-3 bg-red-900/20 rounded-lg"><span class="text-xl">🏢</span>
+        <div>
+         <p class="text-red-300 font-semibold text-sm">เสียชื่อเสียงในวงการ</p>
+         <p class="text-gray-400 text-xs">ลูกค้าและเพื่อนร่วมงานไม่ไว้วางใจ อาจถูกแบนจากวงการ</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-3 p-3 bg-red-900/20 rounded-lg"><span class="text-xl">💼</span>
+        <div>
+         <p class="text-red-300 font-semibold text-sm">สูญเสียโอกาสทางอาชีพ</p>
+         <p class="text-gray-400 text-xs">บริษัทใหญ่ๆ ตรวจสอบประวัติก่อนจ้างงาน</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-3 p-3 bg-red-900/20 rounded-lg"><span class="text-xl">💸</span>
+        <div>
+         <p class="text-red-300 font-semibold text-sm">ภาระทางการเงิน</p>
+         <p class="text-gray-400 text-xs">ค่าชดเชย ค่าทนาย และค่าปรับ อาจเป็นหลักแสนถึงหลักล้าน</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Case Result -->
+     <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-2xl p-5 border border-purple-500/30">
+      <h4 class="font-semibold text-purple-300 mb-3">📋 ผลคดีของคุณณัฐพล</h4>
+      <p class="text-gray-300 text-sm leading-relaxed">ในคดีนี้ คุณณัฐพลต้องชดใช้ค่าเสียหายให้เจ้าของผลงาน <span class="text-yellow-400">50,000 บาท</span> และถูกเจ้าของร้านค้าเรียกค่าเสียหายอีก <span class="text-yellow-400">30,000 บาท</span> เนื่องจากต้องถอดสินค้าและทำโลโก้ใหม่ รวมถึงเสียชื่อเสียงในวงการฟรีแลนซ์</p>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(8)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(10)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> คิดทบทวน → </button>
+     </div>
+    </div>
+   </div><!-- Page 10: Reflection -->
+   <div id="page-10" class="page min-h-full flex flex-col p-6 page-transition hidden">
+    <div class="max-w-4xl mx-auto w-full"><!-- Header -->
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center"><span class="text-2xl">💭</span>
+      </div>
+      <div>
+       <h2 class="text-2xl font-bold text-cyan-300">คิดทบทวน</h2>
+       <p class="text-gray-400">หากเป็นคุณ จะทำอย่างไร?</p>
+      </div>
+     </div><!-- Question Cards -->
+     <div class="space-y-4 mb-6">
+      <div class="glass-card rounded-2xl p-6">
+       <div class="flex items-start gap-4"><span class="text-3xl">🤔</span>
+        <div>
+         <h3 class="font-semibold text-white mb-2">หากคุณต้องการใช้ผลงานผู้อื่น?</h3>
+         <div class="space-y-2 mt-3">
+          <div class="flex items-center gap-2 p-2 bg-green-500/10 rounded-lg"><span class="text-green-400">✓</span> <span class="text-gray-300 text-sm">ติดต่อขออนุญาตเจ้าของก่อนเสมอ</span>
+          </div>
+          <div class="flex items-center gap-2 p-2 bg-green-500/10 rounded-lg"><span class="text-green-400">✓</span> <span class="text-gray-300 text-sm">ทำสัญญาเป็นลายลักษณ์อักษร</span>
+          </div>
+          <div class="flex items-center gap-2 p-2 bg-green-500/10 rounded-lg"><span class="text-green-400">✓</span> <span class="text-gray-300 text-sm">ให้เครดิตเจ้าของผลงาน</span>
+          </div>
+          <div class="flex items-center gap-2 p-2 bg-green-500/10 rounded-lg"><span class="text-green-400">✓</span> <span class="text-gray-300 text-sm">จ่ายค่าลิขสิทธิ์ตามที่ตกลง</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl p-6">
+       <div class="flex items-start gap-4"><span class="text-3xl">🛡️</span>
+        <div>
+         <h3 class="font-semibold text-white mb-2">หากคุณเป็นเจ้าของผลงาน?</h3>
+         <div class="space-y-2 mt-3">
+          <div class="flex items-center gap-2 p-2 bg-blue-500/10 rounded-lg"><span class="text-blue-400">✓</span> <span class="text-gray-300 text-sm">เก็บไฟล์ต้นฉบับและหลักฐานการสร้าง</span>
+          </div>
+          <div class="flex items-center gap-2 p-2 bg-blue-500/10 rounded-lg"><span class="text-blue-400">✓</span> <span class="text-gray-300 text-sm">ใส่ลายน้ำหรือ Signature ในผลงาน</span>
+          </div>
+          <div class="flex items-center gap-2 p-2 bg-blue-500/10 rounded-lg"><span class="text-blue-400">✓</span> <span class="text-gray-300 text-sm">ทำสัญญาที่ชัดเจนกับลูกค้า</span>
+          </div>
+          <div class="flex items-center gap-2 p-2 bg-blue-500/10 rounded-lg"><span class="text-blue-400">✓</span> <span class="text-gray-300 text-sm">รู้สิทธิของตัวเอง และรักษาหลักฐาน</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Alternatives -->
+     <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-2xl p-6 border border-green-500/30">
+      <h3 class="font-semibold text-green-300 mb-4">✨ ทางเลือกที่ถูกต้อง</h3>
+      <p class="text-gray-300 text-sm mb-4">หากคุณณัฐพลเลือกทางเลือกเหล่านี้ จะไม่ต้องประสบปัญหา:</p>
+      <div class="grid md:grid-cols-3 gap-3">
+       <div class="text-center p-4 bg-gray-800/30 rounded-xl"><span class="text-3xl mb-2 block">🎨</span>
+        <p class="text-sm text-gray-300">ออกแบบเอง</p>
+       </div>
+       <div class="text-center p-4 bg-gray-800/30 rounded-xl"><span class="text-3xl mb-2 block">🤝</span>
+        <p class="text-sm text-gray-300">ขอต่อเวลาลูกค้า</p>
+       </div>
+       <div class="text-center p-4 bg-gray-800/30 rounded-xl"><span class="text-3xl mb-2 block">📧</span>
+        <p class="text-sm text-gray-300">ขออนุญาตเจ้าของ</p>
+       </div>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-between mt-8"><button onclick="goToPage(9)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> ← ย้อนกลับ </button> <button onclick="goToPage(11)" class="px-6 py-3 rounded-full bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 transition-all"> ปิดคดี 🎖️ </button>
+     </div>
+    </div>
+   </div><!-- Page 11: Case Closed -->
+   <div id="page-11" class="page min-h-full flex flex-col items-center justify-center p-6 page-transition hidden">
+    <div class="max-w-3xl mx-auto text-center"><!-- Badge -->
+     <div class="mb-8 animate-float">
+      <div class="w-40 h-40 mx-auto relative">
+       <svg viewbox="0 0 160 160" class="w-full h-full"><defs>
+         <lineargradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#fbbf24" />
+          <stop offset="100%" style="stop-color:#f59e0b" />
+         </lineargradient>
+        </defs> <!-- Star shape --> <polygon points="80,10 95,55 145,55 105,85 120,135 80,105 40,135 55,85 15,55 65,55" fill="url(#badgeGrad)" stroke="#fef3c7" stroke-width="2" /> <!-- Center circle --> <circle cx="80" cy="75" r="30" fill="#1e1b4b" /> <!-- Shield icon --> <path d="M80 50 L100 58 L100 78 C100 90 90 98 80 102 C70 98 60 90 60 78 L60 58 Z" fill="none" stroke="#fbbf24" stroke-width="2" /> <circle cx="80" cy="72" r="8" fill="#fbbf24" /> <rect x="77" y="82" width="6" height="10" fill="#fbbf24" />
+       </svg>
+      </div>
+     </div><!-- Congratulations -->
+     <h1 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">🎉 ยินดีด้วย! คดีปิดสมบูรณ์</h1>
+     <div class="glass-card rounded-2xl p-6 mb-6">
+      <p class="text-gray-300 mb-4">คุณได้รับตำแหน่ง</p>
+      <h2 id="detective-title-display" class="text-2xl font-bold text-yellow-400 mb-4">🕵️ นักสืบดิจิทัลผู้พิทักษ์ทรัพย์สินทางปัญญา</h2>
+      <p class="text-gray-400 text-sm">คุณได้เรียนรู้เกี่ยวกับกฎหมายลิขสิทธิ์และการปกป้องทรัพย์สินทางปัญญาแล้ว!</p>
+     </div><!-- Summary Stats -->
+     <div class="grid grid-cols-3 gap-4 mb-6">
+      <div class="glass-card rounded-xl p-4">
+       <p class="text-2xl font-bold text-purple-400">4</p>
+       <p class="text-xs text-gray-400">หลักฐานที่พบ</p>
+      </div>
+      <div class="glass-card rounded-xl p-4">
+       <p class="text-2xl font-bold text-green-400">1</p>
+       <p class="text-xs text-gray-400">คดีที่คลี่คลาย</p>
+      </div>
+      <div class="glass-card rounded-xl p-4">
+       <p class="text-2xl font-bold text-yellow-400">100%</p>
+       <p class="text-xs text-gray-400">ความสำเร็จ</p>
+      </div>
+     </div><!-- Key Takeaways -->
+     <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-2xl p-5 border border-purple-500/30 mb-6 text-left">
+      <h4 class="font-semibold text-purple-300 mb-3 text-center">📝 สิ่งที่ได้เรียนรู้</h4>
+      <div class="space-y-2 text-sm">
+       <p class="text-gray-300">✓ ลิขสิทธิ์คุ้มครองผลงานโดยอัตโนมัติตั้งแต่สร้างเสร็จ</p>
+       <p class="text-gray-300">✓ ต้องขออนุญาตก่อนนำผลงานผู้อื่นไปใช้เสมอ</p>
+       <p class="text-gray-300">✓ การละเมิดลิขสิทธิ์มีโทษทั้งทางแพ่งและอาญา</p>
+       <p class="text-gray-300">✓ การใช้เชิงพาณิชย์โดยไม่ได้รับอนุญาตเป็นความผิดร้ายแรง</p>
+      </div>
+     </div><!-- CTA -->
+     <div class="flex flex-col sm:flex-row gap-4 justify-center"><button onclick="goToPage(0)" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 transition-all"> 🔄 เล่นอีกครั้ง </button> <button onclick="goToPage(8)" class="px-6 py-3 rounded-full bg-gray-700 hover:bg-gray-600 transition-all"> 📚 ทบทวนกฎหมาย </button>
+     </div><!-- Footer Message -->
+     <p class="text-gray-500 text-sm mt-8">"ใช้สื่ออย่างถูกต้อง เคารพสิทธิผู้สร้าง"</p>
+    </div>
+   </div>
+  </div>
+  <!-- Navigation Buttons -->
+   <div class="mt-8 pb-6" id="navigationButtons">
+    <div class="max-w-6xl mx-auto px-4">
+     <div class="flex justify-center gap-4 flex-wrap">
+    <a href="index2.html" class="px-6 py-2 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95 shadow-md" style="background: var(--primary-color, #3B82F6); color: white; text-decoration: none; display: inline-block;">
+     ← ก่อนหน้า
+    </a>
+      <a href="index4.html" class="px-6 py-2 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95 shadow-md" style="background: var(--primary-color, #3B82F6); color: white; text-decoration: none; display: inline-block;">
+       ถัดไป →
+      </a>
+  <script>
+    // Default config
+    const defaultConfig = {
+      game_title: 'คดีลับทรัพย์สินทางปัญญา',
+      detective_title: 'นักสืบดิจิทัลผู้พิทักษ์ทรัพย์สินทางปัญญา',
+      primary_color: '#8b5cf6',
+      secondary_color: '#3b82f6',
+      accent_color: '#fbbf24',
+      background_color: '#0f0a1e',
+      text_color: '#ffffff'
+    };
+
+    let config = { ...defaultConfig };
+    let currentPage = 0;
+    let evidenceDiscovered = [false, false, false, false];
+
+    // Evidence data
+    const evidenceData = {
+      1: {
+        title: 'ไฟล์งานที่พบในร้านค้า',
+        content: `<p class="text-green-400 mb-2">🔎 ผลการตรวจสอบ:</p>
+          <p class="text-gray-300 text-sm">ไฟล์โลโก้ที่พบในร้านค้าเป็นไฟล์เดียวกันกับต้นฉบับ <span class="text-yellow-400">100%</span></p>
+          <p class="text-gray-400 text-xs mt-2">Metadata แสดงว่าเป็นการ Copy ไม่ใช่การสร้างใหม่</p>`
+      },
+      2: {
+        title: 'Timeline การอัปโหลด',
+        content: `<p class="text-green-400 mb-2">📅 ไทม์ไลน์:</p>
+          <p class="text-gray-300 text-sm"><span class="text-blue-400">10 ธ.ค.</span> - สร้างผลงานต้นฉบับ</p>
+          <p class="text-gray-300 text-sm"><span class="text-red-400">8 ม.ค.</span> - โลโก้ปรากฏในร้านค้า</p>
+          <p class="text-gray-400 text-xs mt-2">ห่างกัน 1 เดือน ชี้ว่ามีการนำไปใช้ภายหลัง</p>`
+      },
+      3: {
+        title: 'ข้อความการติดต่อ',
+        content: `<p class="text-green-400 mb-2">💬 พบข้อความ:</p>
+          <p class="text-gray-300 text-sm italic">"ส่งโลโก้ให้แล้วครับ ใช้ได้เลย"</p>
+          <p class="text-gray-300 text-sm mt-2">ระหว่าง: <span class="text-yellow-400">ฟรีแลนซ์</span> → <span class="text-pink-400">เจ้าของร้าน</span></p>
+          <p class="text-gray-400 text-xs mt-2">วันที่ 7 ม.ค. (1 วันก่อนโลโก้ปรากฏ)</p>`
+      },
+      4: {
+        title: 'ความเชื่อมโยง',
+        content: `<p class="text-green-400 mb-2">🔗 พบความเชื่อมโยง:</p>
+          <p class="text-gray-300 text-sm">• ฟรีแลนซ์เป็นเพื่อนร่วมวงการกับเจ้าของผลงาน</p>
+          <p class="text-gray-300 text-sm">• เคยเห็นไฟล์ต้นฉบับในกลุ่มนักออกแบบ</p>
+          <p class="text-gray-300 text-sm">• รับงานจากเจ้าของร้านช่วงเดียวกัน</p>
+          <p class="text-gray-400 text-xs mt-2">มีทั้งแรงจูงใจและโอกาส!</p>`
+      }
+    };
+
+    // Page navigation
+    function goToPage(pageNum) {
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+      const targetPage = document.getElementById(`page-${pageNum}`);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+        currentPage = pageNum;
+        window.scrollTo(0, 0);
+      }
+    }
+
+    // Evidence discovery
+    function discoverEvidence(num) {
+      if (!evidenceDiscovered[num - 1]) {
+        evidenceDiscovered[num - 1] = true;
+        
+        const card = document.getElementById(`evidence-${num}`);
+        const content = document.getElementById(`evidence-${num}-content`);
+        
+        card.classList.add('discovered');
+        content.innerHTML = evidenceData[num].content;
+        
+        const count = evidenceDiscovered.filter(e => e).length;
+        document.getElementById('evidence-count').textContent = count;
+        
+        // Show analysis box after 2 evidence
+        if (count >= 2) {
+          const analysisBox = document.getElementById('analysis-box');
+          analysisBox.classList.remove('hidden');
+          
+          if (count === 2) {
+            document.getElementById('analysis-text').textContent = 
+              'เริ่มเห็นความเชื่อมโยง... มีใครบางคนสามารถเข้าถึงไฟล์ต้นฉบับและนำไปส่งต่อได้';
+          } else if (count === 3) {
+            document.getElementById('analysis-text').textContent = 
+              'หลักฐานชี้ชัดขึ้น! ฟรีแลนซ์มีความเกี่ยวข้องกับทั้งเจ้าของผลงานและเจ้าของร้าน';
+          } else if (count === 4) {
+            document.getElementById('analysis-text').textContent = 
+              'หลักฐานครบถ้วน! ฟรีแลนซ์มีทั้งแรงจูงใจ โอกาส และหลักฐานเชื่อมโยงชัดเจน พร้อมสรุปคดีแล้ว!';
+          }
+        }
+        
+        // Enable next button after all evidence
+        if (count === 4) {
+          const nextBtn = document.getElementById('next-btn-5');
+          nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          nextBtn.disabled = false;
+        }
+      }
+    }
+
+    // Apply config to UI
+    function applyConfig() {
+      document.getElementById('main-title').textContent = config.game_title || defaultConfig.game_title;
+      document.getElementById('detective-title-display').textContent = 
+        '🕵️ ' + (config.detective_title || defaultConfig.detective_title);
+    }
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                cfg.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                cfg.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                cfg.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['game_title', cfg.game_title || defaultConfig.game_title],
+          ['detective_title', cfg.detective_title || defaultConfig.detective_title]
+        ])
+      });
+    }
+
+    // Initial setup
+    applyConfig();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c5806e90257893b',t:'MTc2OTY4MjM0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
